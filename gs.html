@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GeoVisionAI — Golden Temple (Download KML)</title>
+  <style>
+    :root{
+      --bg1:#0f172a; --bg2:#78350f; --bg3:#fef3c7;
+      --panel:#ffffffdd; --accent:#ca8a04; --dark:#0f172a;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+    body{
+      background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+      display:flex;align-items:center;justify-content:center;padding:20px;color:var(--dark);
+    }
+    .card{width:100%;max-width:880px;background:var(--panel);border-radius:14px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.25);}
+    header{display:flex;gap:18px;align-items:center}
+    header img{width:84px;height:64px;object-fit:cover;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+    h1{margin:0;font-size:1.6rem;color:#7a3d03}
+    p.lead{margin:6px 0 0;color:#334155}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:20px}
+    .left{padding-right:8px}
+    .right{background:#f8fafc;border-radius:10px;padding:12px;align-self:start}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+    .btn-yellow{background:var(--accent);color:white}
+    .btn-dark{background:var(--dark);color:white}
+    .note{font-size:13px;color:#475569;margin-top:12px}
+    .code{display:block;padding:10px;background:#0f172a;color:#fff;border-radius:8px;font-family:monospace;font-size:13px;margin-top:8px}
+    footer{margin-top:16px;font-size:12px;color:#64748b;text-align:center}
+    @media (max-width:840px){
+      .grid{grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <header>
+      <img src="amr.jpg">
+      <div>
+        <h1>VisioAI — Golden Temple</h1>
+        <p class="lead">Download KML files (Placemark &amp; Tour) and open them in Google Earth Pro to play the guided tour.</p>
+      </div>
+    </header>
+
+    <div class="grid" aria-label="content">
+      <div class="left">
+        <h3 style="margin:0 0 8px 0">What you get</h3>
+        <ul style="margin:0 0 12px 18px;color:#334155">
+          <li><strong>Placemark KML</strong> — a single point for the Golden Temple (works in web &amp; Pro).</li>
+          <li><strong>Tour KML</strong> — a <code>&lt;gx:Tour&gt;</code> flyover sequence (open in Google Earth Pro to autoplay).</li>
+          <li>No server, no install — just save &amp; open the files in Google Earth.</li>
+        </ul>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button id="btnPlacemark" class="btn btn-yellow">📥 Download Placemark KML</button>
+          <button id="btnTour" class="btn btn-dark">🎬 Download Tour KML (Pro)</button>
+        </div>
+
+        <div class="note">
+          Steps to play:
+          <ol style="margin:6px 0 0 18px;padding:0">
+            <li>Download the two KML files (buttons above).</li>
+            <li>Open <strong>Google Earth Pro (desktop)</strong>: File → Open → select the <code>golden_temple_tour.kml</code>.</li>
+            <li>In the Places panel expand the tour and click the <strong>camera / play</strong> icon to run the tour.</li>
+          </ol>
+        </div>
+
+        <div class="note" style="margin-top:12px">
+          If you want the content inside the placemark popup (story, image, facts) — open the placemark KML in a text editor and add HTML inside the <code>&lt;description&gt;...&lt;/description&gt;</code> tag. I can add that for you if you want a ready-made story card.
+        </div>
+
+        <pre class="code" aria-hidden="true">Coordinates: 31.6200, 74.8770</pre>
+      </div>
+
+      <aside class="right">
+        <h4 style="margin:0 0 8px 0">Quick preview — Story</h4>
+        <div style="font-size:14px;color:#0f172a;line-height:1.4">
+          <strong>Golden Temple (Harmandir Sahib)</strong>
+          <p style="margin:.4rem 0 0">
+            The Golden Temple, in Amritsar, Punjab, is the holiest gurdwara of Sikhism. Founded in the 16th century,
+            its gold-plated sanctum sits at the center of the sacred Amrit Sarovar (Pool of Nectar). The temple
+            welcomes millions with a tradition of langar (free community kitchen) and warm hospitality.
+          </p>
+        </div>
+
+        <div style="margin-top:12px">
+          <a href="https://earth.google.com/web/" target="_blank" rel="noreferrer" style="text-decoration:none">
+            <button class="btn" style="background:#e2e8f0;color:#0f172a">Open Google Earth Web (manual)</button>
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Save this file, click the buttons, then open the KMLs in Google Earth Pro to play the tour. Need the KMZ with images/audio? Ask me and I’ll generate it.
+    </footer>
+  </div>
+
+<script>
+  const scenes = [
+    { id:'punjab', name:'Punjab Overview', lon:75.0000, lat:31.0000, range:1500000, tilt:30, heading:0, duration:4 },
+    { id:'amritsar', name:'Amritsar City', lon:74.8723, lat:31.6340, range:8000, tilt:45, heading:0, duration:4 },
+    { id:'golden', name:'Golden Temple', lon:74.8770, lat:31.6200, range:1000, tilt:60, heading:0, duration:6 }
+  ];
+
+  function buildPlacemarkKML(){
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<kml xmlns="http://www.opengis.net/kml/2.2">\n' +
+      '  <Document>\n' +
+      '    <name>Golden Temple — Placemark</name>\n' +
+      '    <Placemark>\n' +
+      '      <name>Golden Temple (Harmandir Sahib)</name>\n' +
+      '      <description><![CDATA[\n' +
+      '        <h2>Golden Temple (Harmandir Sahib)</h2>\n' +
+      '        <p>The Golden Temple in Amritsar is the holiest gurdwara of Sikhism. Surrounded by the sacred Amrit Sarovar, the temple symbolizes equality and hospitality.</p>\n' +
+      '        <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Golden_Temple_Amritsar_India.jpg" width="320" />\n' +
+      '      ]]></description>\n' +
+      '      <Point>\n' +
+      '        <coordinates>' + scenes[2].lon + ',' + scenes[2].lat + ',0</coordinates>\n' +
+      '      </Point>\n' +
+      '    </Placemark>\n' +
+      '  </Document>\n' +
+      '</kml>';
+  }
+  function buildTourKML(){
+    let k = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    k += '<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">\n';
+    k += '  <Document>\n';
+    k += '    <name>Golden Temple — Guided Tour</name>\n';
+    k += '    <description>GeoVisionAI guided flyover — Golden Temple, Amritsar</description>\n';
+    // add placemark to ensure web viewers see a point
+    k += '    <Placemark>\n';
+    k += '      <name>Golden Temple</name>\n';
+    k += '      <Point>\n';
+    k += '        <coordinates>' + scenes[2].lon + ',' + scenes[2].lat + ',0</coordinates>\n';
+    k += '      </Point>\n';
+    k += '    </Placemark>\n';
+    // Tour playlist
+    k += '    <gx:Tour>\n';
+    k += '      <name>GeoVisionAI Golden Temple Tour</name>\n';
+    k += '      <gx:Playlist>\n';
+    // Punjab overview
+    k += '        <gx:FlyTo>\n';
+    k += '          <gx:duration>' + scenes[0].duration + '</gx:duration>\n';
+    k += '          <gx:flyToMode>smooth</gx:flyToMode>\n';
+    k += '          <LookAt>\n';
+    k += '            <longitude>' + scenes[0].lon + '</longitude>\n';
+    k += '            <latitude>' + scenes[0].lat + '</latitude>\n';
+    k += '            <altitude>0</altitude>\n';
+    k += '            <heading>' + scenes[0].heading + '</heading>\n';
+    k += '            <tilt>' + scenes[0].tilt + '</tilt>\n';
+    k += '            <range>' + scenes[0].range + '</range>\n';
+    k += '          </LookAt>\n';
+    k += '        </gx:FlyTo>\n';
+    // Amritsar view
+    k += '        <gx:FlyTo>\n';
+    k += '          <gx:duration>' + scenes[1].duration + '</gx:duration>\n';
+    k += '          <gx:flyToMode>smooth</gx:flyToMode>\n';
+    k += '          <LookAt>\n';
+    k += '            <longitude>' + scenes[1].lon + '</longitude>\n';
+    k += '            <latitude>' + scenes[1].lat + '</latitude>\n';
+    k += '            <altitude>0</altitude>\n';
+    k += '            <heading>' + scenes[1].heading + '</heading>\n';
+    k += '            <tilt>' + scenes[1].tilt + '</tilt>\n';
+    k += '            <range>' + scenes[1].range + '</range>\n';
+    k += '          </LookAt>\n';
+    k += '        </gx:FlyTo>\n';
+    // Golden Temple close and orbit (three headings for circle)
+    const gold = scenes[2];
+    [45, 135, 225, 315].forEach((heading, idx) => {
+      k += '        <gx:FlyTo>\n';
+      k += '          <gx:duration>4</gx:duration>\n';
+      k += '          <gx:flyToMode>smooth</gx:flyToMode>\n';
+      k += '          <LookAt>\n';
+      k += '            <longitude>' + gold.lon + '</longitude>\n';
+      k += '            <latitude>' + gold.lat + '</latitude>\n';
+      k += '            <altitude>0</altitude>\n';
+      k += '            <heading>' + heading + '</heading>\n';
+      k += '            <tilt>' + gold.tilt + '</tilt>\n';
+      k += '            <range>' + (gold.range - 200) + '</range>\n';
+      k += '          </LookAt>\n';
+      k += '        </gx:FlyTo>\n';
+    });
+    // final hold
+    k += '        <gx:Wait><gx:duration>3</gx:duration></gx:Wait>\n';
+    k += '      </gx:Playlist>\n';
+    k += '    </gx:Tour>\n';
+    k += '  </Document>\n';
+    k += '</kml>\n';
+    return k;
+  }
+
+  function downloadFile(filename, text){
+    const blob = new Blob([text], { type: 'application/vnd.google-earth.kml+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  document.getElementById('btnPlacemark').addEventListener('click', () => {
+    const k = buildPlacemarkKML();
+    downloadFile('golden_temple_placemark.kml', k);
+  });
+
+  document.getElementById('btnTour').addEventListener('click', () => {
+    const k = buildTourKML();
+    downloadFile('golden_temple_tour.kml', k);
+  });
+</script>
+</body>
+</html>
